@@ -4,7 +4,11 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"dev": "node scripts/dev.ts",
+		"build": "node scripts/build.ts",
+		"preview": "node scripts/preview.ts",
+		"lint": "node scripts/lint.ts",
+		"publish": "node scripts/publish.ts"
 	},
 	"repository": {
 		"type": "git",
@@ -24,3 +28,4 @@
 		"@types/node": "^18.13.0"
 	}
 }
+
