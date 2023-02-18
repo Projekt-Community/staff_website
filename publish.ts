@@ -13,8 +13,6 @@ const argv = yargs(process.argv.slice(2))
 console.log("argv: ", argv)
 const { branch, message } = argv;
 
-if (path.basename(process.cwd()) != "pjkt_staff_website") process.chdir("pjkt_staff_website")
-const currentFolder = path.basename(process.cwd())
 const validBranches = ["Live", "main"]
 const isLive = branch == "Live"
 const isMain = branch == "main"
@@ -29,20 +27,17 @@ if (isLive) { // Build the dist folder and copy the 404 code
 	execute(`@powershell copy dist/index.html dist/404.html`)
 }
 
-process.chdir("..") // Change working director to parent folder
 if (isLive) {
-	execute(`git add ${currentFolder}/dist`)
+	execute(`git add dist`)
 } else {
 	execute(`git add .`)
 }
 
 execute(`git commit -m "${message}"`)
 
-if (isLive) execute(`git subtree push --prefix ${currentFolder}/dist origin ${branch}`)
+if (isLive) execute(`git subtree push --prefix dist origin ${branch}`)
 
 execute(`git push`)
-
-process.chdir(currentFolder)
 
 
 function execute(execution) {

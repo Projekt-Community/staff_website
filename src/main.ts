@@ -4,11 +4,11 @@
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
 
-// Components
-import App from './App.vue'
-
 // Composables
 import { createApp } from 'vue'
+
+// Components
+import App from './App.vue'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
