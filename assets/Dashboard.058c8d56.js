@@ -1,0 +1,1 @@
+import{d as o,u as t,s as a,c,o as n,a as r}from"./index.e094e2a4.js";const _={class:"home"},l=r("h1",null,"HOME",-1),d=[l],p=o({__name:"Dashboard",setup(u){const e=t(),{user:s}=a(e);return console.log(s.value),(h,i)=>(n(),c("div",_,d))}});export{p as default};
