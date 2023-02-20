@@ -28,14 +28,22 @@ if (isLive) { // Build the dist folder and copy the 404 code
 }
 
 if (isLive) {
-	execute(`git add dist`)
+	try {
+		execute(`git add dist`)
+	} catch (error) {
+		console.log(error)
+	}
 } else {
 	execute(`git add .`)
 }
 
 execute(`git commit -m "${message}"`)
 
-if (isLive) execute(`git subtree push --prefix dist origin ${branch}`)
+if (isLive) {
+	execute(`git subtree split --prefix dist -b Live`)
+	execute(`git push -f origin Live:Live`)
+	execute(`git branch -D Live`)
+}
 
 execute(`git push`)
 

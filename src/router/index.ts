@@ -1,26 +1,57 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import { firebaseAuth } from '@/firebase/config'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const routes = [
-  {
-    path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Home',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
-      },
-    ],
-  },
+	{
+		path: '/' || '*',
+		name: 'Dashboard',
+		component: () => import('@/views/Dashboard.vue'),
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/login',
+		name: 'Login',
+		component: () => import('@/views/Authentication/Login.vue'),
+		meta: {
+			requiresAuth: false
+		}
+	},
+	{
+		path: '/MyAccount',
+		name: 'My-Account',
+		component: () => import('@/views/Authentication/MyAccount.vue'),
+		meta: {
+			requiresAuth: true
+		}
+	}
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+	history: createWebHistory(process.env.BASE_URL),
+	routes,
+})
+
+router.beforeResolve((to, from) => {
+	const route = to
+	const meta = to.meta
+	if (meta.requiresAuth) {
+		onAuthStateChanged(firebaseAuth, () => {
+			const user = firebaseAuth.currentUser
+			if (user == null && route.path != '/login' && meta.requiresAuth) {
+				console.log("pushing to Login")
+				router.push('/login')
+			}
+		})
+	} else if (route.path == '/login') {
+		onAuthStateChanged(firebaseAuth, () => {
+			const user = firebaseAuth.currentUser
+			if (user != null) router.push('/')
+		})
+	}
 })
 
 export default router
