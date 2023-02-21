@@ -20,6 +20,7 @@
       ]
      }
   },
+  "references": [{ "path": "./tsconfig.node.json" }],
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/plugins/index.js", "src/plugins/index.js"],
   "exclude": ["node_modules"]
 }
