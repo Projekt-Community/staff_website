@@ -9,7 +9,7 @@ const routes = [
 		name: 'Dashboard',
 		component: () => import('@/views/Dashboard.vue'),
 		meta: {
-			requiresAuth: true
+			public: false
 		}
 	},
 	{
@@ -17,7 +17,15 @@ const routes = [
 		name: 'Login',
 		component: () => import('@/views/Authentication/Login.vue'),
 		meta: {
-			requiresAuth: false
+			public: true
+		}
+	},
+	{
+		path: '/Profile',
+		name: "Profile",
+		component: () => import('@/views/Authentication/Profile.vue'),
+		meta: {
+			public: false
 		}
 	},
 	{
@@ -25,7 +33,7 @@ const routes = [
 		name: 'My-Account',
 		component: () => import('@/views/Authentication/MyAccount.vue'),
 		meta: {
-			requiresAuth: true
+			public: false
 		}
 	}
 ]
@@ -41,7 +49,7 @@ router.beforeResolve((to, from) => {
 	if (meta.requiresAuth) {
 		onAuthStateChanged(firebaseAuth, () => {
 			const user = firebaseAuth.currentUser
-			if (user == null && route.path != '/login' && meta.requiresAuth) {
+			if (user == null && route.path != '/login' && meta.public == false) {
 				console.log("pushing to Login")
 				router.push('/login')
 			}

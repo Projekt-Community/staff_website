@@ -32,9 +32,9 @@ const { logout } = store
 				<v-btn
 					rounded
 					variant="text"
-					@click="router.push('/MyAccount')"
+					@click="router.push('/Profile')"
 				>
-					Edit Account
+					View Profile
 				</v-btn>
 				<v-divider class="my-3" />
 				<v-btn

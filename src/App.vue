@@ -24,3 +24,10 @@ onBeforeMount(() => {
 	fetchUserData()
 })
 </script>
+
+<style>
+.full-page {
+	width: 100vw;
+	height: 100vh;
+}
+</style>
