@@ -32,7 +32,7 @@ const { logout } = store
 				<v-btn
 					rounded
 					variant="text"
-					@click="router.push('/Profile')"
+					@click="router.push(`/users/${user.uid}`)"
 				>
 					View Profile
 				</v-btn>

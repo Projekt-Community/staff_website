@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<NavBar :user="user" />
-		<v-main>
+		<v-main class="ma-10">
 			<router-view />
 		</v-main>
 	</v-app>
@@ -30,4 +30,7 @@ onBeforeMount(() => {
 	width: 100vw;
 	height: 100vh;
 }
+</style>
+
+<style scoped>
 </style>

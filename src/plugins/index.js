@@ -17,12 +17,12 @@ import VueCroppie from 'vue-croppie'
 const pinia = createPinia()
 
 export function registerPlugins(app) {
-  loadFonts()
-  app
-    .use(pinia)
-    .use(vuetify)
-    .use(router)
-    .use(VueCroppie)
+	loadFonts()
+	app
+		.use(pinia)
+		.use(vuetify)
+		.use(router)
+		.use(VueCroppie)
 
 }
 

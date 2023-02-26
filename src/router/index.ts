@@ -21,45 +21,64 @@ const routes = [
 		}
 	},
 	{
-		path: '/Profile',
-		name: "Profile",
+		path: '/users/:uid',
+		name: "User",
 		component: () => import('@/views/Authentication/Profile.vue'),
 		meta: {
 			public: false
+		},
+		props: true,
+		params: {
+
 		}
 	},
 	{
-		path: '/MyAccount',
-		name: 'My-Account',
+		path: '/users/:uid/edit',
+		name: 'Account',
 		component: () => import('@/views/Authentication/MyAccount.vue'),
 		meta: {
-			public: false
+			public: false,
+			sameUser: true
+		}
+	},
+	{
+		path: '/Calendar',
+		name: 'Calendar',
+		component: () => import('@/views/Calendar.vue'),
+		meta: {
+			public: false,
 		}
 	}
 ]
+
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes,
 })
-
-router.beforeResolve((to, from) => {
+router.beforeResolve(async (to, from) => {
 	const route = to
 	const meta = to.meta
-	if (meta.requiresAuth) {
-		onAuthStateChanged(firebaseAuth, () => {
-			const user = firebaseAuth.currentUser
-			if (user == null && route.path != '/login' && meta.public == false) {
-				console.log("pushing to Login")
-				router.push('/login')
-			}
-		})
-	} else if (route.path == '/login') {
-		onAuthStateChanged(firebaseAuth, () => {
-			const user = firebaseAuth.currentUser
-			if (user != null) router.push('/')
-		})
+	const params = to.params
+	if (!navigator.onLine) {
+		router.push('/login')
+		return;
 	}
+	await onAuthStateChanged(firebaseAuth, async () => {
+		const user = firebaseAuth.currentUser
+		// Handles users not logged in
+		if (user == null || !navigator.onLine) {
+			if (meta.public == false) router.push("/login")
+		}
+
+		// handles users logged in
+		else {
+			if (route.path == '/login') router.push('/')
+			if (route.path.includes('/users') && route.path.includes('/edit') && params.uid != user.uid) {
+				router.push(`/users/${user.uid}/edit`)
+			}
+		}
+	})
 })
 
 export default router

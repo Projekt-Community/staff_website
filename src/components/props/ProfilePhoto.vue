@@ -57,18 +57,21 @@
 				class="window-item"
 			>
 				<v-card-text>
-					<h4>Profile Picture</h4>
-					<p>Need to upload your profile picture. Do so here!</p>
+					<h4>{{ type == "banner" ? "Banner Upload" : type == "picture" ? "Picture upload" : '' }}</h4>
+					<p>Need to upload your {{ type }} picture. Do so here!</p>
 					<v-divider class="my-10"></v-divider>
 					<div
-						class="d-flex align-center"
-						style="width: 100%"
+						class="d-flex align-center mx-auto"
+						:style="type == 'picture' ? 'width: 50%' : ''"
 					>
-						<v-avatar
-							:image="profilePhoto"
-							size="20%"
-							class="mx-auto"
-						/>
+						<v-img
+							:src="current"
+							:aspect-ratio="type == 'banner' ? 20 / 3 : 1"
+							:width="type == 'picture' ? 50 : '100%'"
+							:style="type == 'picture' ? 'border-radius: 50%' : ''"
+							cover
+						>
+						</v-img>
 					</div>
 				</v-card-text>
 			</v-window-item>
@@ -100,7 +103,8 @@
 						style="width: 100%"
 					>
 						<div
-							style="border-radius: 50%; width: 40%; height: 40%; overflow: hidden;"
+							style="width: 40%; height: 40%; overflow: hidden;"
+							:style="type == 'profile' ? '50' : '0'"
 							class="mx-auto"
 						>
 							<v-img
@@ -134,7 +138,7 @@
 				id="inputElement"
 				:key="fileInputKey"
 			>
-			<v-btn @click="handleCard">{{ actions[step - 1] }}</v-btn>
+			<v-btn @click="handleCard(type)">{{ actions[step - 1] }}</v-btn>
 		</v-card-actions>
 		<v-progress-linear
 			v-if="progress != undefined && progress != 100"
@@ -145,15 +149,19 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted, defineEmits } from 'vue'
+import { ref, nextTick, onMounted, defineEmits, defineProps } from 'vue'
 import Croppie from 'croppie'
 import 'croppie/croppie.css' // import the croppie css manually
 import { storeToRefs } from 'pinia'
-import { useUserStore, useStorageStore } from '@/store'
+import { useUserStore, useStorageStore, useFirebaseStore } from '@/store'
 import { base64 } from '@firebase/util'
 import imageCompression from 'browser-image-compression'
+import { FieldPath } from '@firebase/firestore'
 
-
+const props = defineProps({
+	type: String,
+	current: String
+})
 const emit = defineEmits(['close'])
 
 const store = useUserStore()
@@ -163,6 +171,10 @@ const { updateUser } = store
 const storageStore = useStorageStore()
 const { progress, imageURL } = storeToRefs(storageStore)
 const { uploadFile } = storageStore
+
+const database = useFirebaseStore()
+const { } = storeToRefs(database)
+const { setUserData } = database
 
 //#region Variables
 const fileInputKey = ref(new Date().getTime())
@@ -181,23 +193,23 @@ const finalImgURL = ref('')
 const finalImgFile = ref('')
 const finalImgBlob = ref()
 //#endregion
-async function handleCard() {
+async function handleCard(type) {
 	switch (step.value) {
 		case 1:
-			await Upload()
+			await Upload(type)
 			break;
 
 		case 2:
-			await Set()
+			await Set(type)
 			break;
 
 		case 3:
-			await Save()
+			await Save(type)
 		default:
 			break;
 	}
 }
-async function Upload() {
+async function Upload(type) {
 	const input = document.getElementById('inputElement')
 	fileInputKey.value = new Date().getTime()
 	input.click()
@@ -205,8 +217,6 @@ async function Upload() {
 		const files = input.files
 		const image = files[0]
 		const imageSizemb = image.size / (1024 * 1024)
-		console.log(image.size)
-		console.log(imageSizemb)
 		// if (imageSizemb > 20) {
 		// 	alert("File Size is too large. Please Upload files less than 20 MB")
 		// 	return;
@@ -226,8 +236,8 @@ async function Upload() {
 					},
 					viewport: {
 						width: 400,
-						height: 400,
-						type: "circle"
+						height: type == 'picture' ? 400 : 60,
+						type: type == "picture" ? 'circle' : 'square'
 					},
 					customClass: "reactive"
 				})
@@ -245,7 +255,7 @@ async function Upload() {
 	})
 }
 
-async function Set() {
+async function Set(type) {
 	// var res = new Croppie().result({
 	// 	size: "viewport",
 	// 	format: "webp",
@@ -266,7 +276,7 @@ async function Set() {
 	sleep(1).then(() => {
 		finalImgFile.value = new File(
 			[compressedFile],
-			`${user.value.uid}_${new Date().toDateString()}_ProfilePicture.webp`,
+			`${user.value.uid}_${new Date().toDateString()}_${type == 'picture' ? 'profile' : 'banner'}Picture.webp`,
 			{
 				type: "image/webp"
 			}
@@ -276,22 +286,19 @@ async function Set() {
 	})
 }
 
-async function Save() {
-	console.log(finalImgFile.value)
-	//`users/${user.value.uid}/images/${finalImgFile.name}`
-	uploadFile(finalImgBlob.value, `users/${user.value.uid}/images`, `profileImage`, ".webp")
-
+async function Save(type) {
+	uploadFile(finalImgBlob.value, `users/${user.value.uid}/images`, `${type == 'picture' ? 'profileImage' : 'bannerImage'}`, ".webp")
 	do {
 		await sleep(.5);
 	} while (imageURL.value == undefined)
-
-	console.log("Updating Avatar")
-	console.log(user.value)
-	await updateUser({
-		photoURL: imageURL.value
+	if (type == 'picture')
+		await updateUser({
+			photoURL: imageURL.value
+		})
+	await setUserData(user.value, {
+		profileBackground: type == 'banner' ? imageURL.value : undefined,
+		photoURL: type == 'picture' ? imageURL.value : undefined
 	})
-
-	console.log(user.value.photoURL)
 	close()
 }
 
@@ -299,7 +306,6 @@ function close() {
 	emit('close')
 }
 async function back() {
-	console.log(step.value)
 	if (step.value > 1) step.value = 1
 	c.value.destroy()
 

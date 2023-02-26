@@ -30,9 +30,17 @@ const navLocs = [
 	{
 		name: "Dashboard",
 		path: "/"
+	},
+	{
+		name: "Calendar",
+		path: "/calendar"
 	}
 ]
 //#endregion
+
+</script>
+
+<script setup> //JS componenets
 
 </script>
 
@@ -68,15 +76,19 @@ const navLocs = [
 	<v-navigation-drawer
 		app
 		v-model="drawer"
+		width="200"
 	>
 		<v-list>
 			<v-list-item
 				v-for="(nav, i) in navLocs"
 				:key="i"
+				class="px-0"
 			>
 				<v-btn
 					@click="router.push(nav.path)"
-					block
+					height="50"
+					width="200"
+					rounded="e-xl"
 				>
 					{{ nav.name }}
 				</v-btn>
