@@ -40,10 +40,6 @@ const navLocs = [
 
 </script>
 
-<script setup> //JS componenets
-
-</script>
-
 <template>
 	<v-app-bar app>
 		<v-app-bar-nav-icon @click="drawer = !drawer" />
