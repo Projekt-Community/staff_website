@@ -19,7 +19,8 @@ npm run publish -- (-l?) (-m: "YOUR STRING HERE")
 	-l: Builds the production build of the vue project and pushes it to the live branch
 	-m: [REQUIRED] the commit messaged used for your commit
  
-This command will add and commit the dist folder (if -l is used) or the entire project (if -l is not used) and push it to the repository using your commit message
+This command will add and commit the dist folder (if -l is used) or the entire 
+project (if -l is not used) and push it to the repository using your commit message
 ```
 #
 ## FIREBASE commands
