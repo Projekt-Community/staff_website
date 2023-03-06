@@ -3,6 +3,8 @@ import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getStorage, FirebaseStorage, connectStorageEmulator } from 'firebase/storage'
 import {getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore'
 
+//test
+
 const firebaseConfig = {
 	apiKey: "AIzaSyCISOirQ_s1-GilFVH3x5PmMGJ3RuvlHBg",
 	authDomain: "projekt-staff.firebaseapp.com",
