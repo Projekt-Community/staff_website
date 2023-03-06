@@ -5,7 +5,7 @@ const yargs = require('yargs')
 
 const argv = yargs(process.argv.slice(2))
 	.options({
-		b: { alias: "live", type: "boolean"},
+		b: { alias: "live", type: "boolean" },
 		m: { alias: "message", type: "string", demandOption: true, coerce: parseMessage }
 	})
 	.help()
@@ -29,7 +29,11 @@ if (isLive) {
 		console.log(error)
 	}
 } else {
-	execute(`git add .`)
+	try {
+		execute(`git add .`)
+	} catch (error) {
+		console.log(error)
+	}
 }
 
 execute(`git commit -m "${message}"`)
