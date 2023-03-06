@@ -1,8 +1,11 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getStorage, FirebaseStorage, connectStorageEmulator } from 'firebase/storage'
-import {getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore'
+import dotenv from 'dotenv'
 
+const localIP = import.meta.env.VITE_LocalIP
+console.log(localIP)
 const firebaseConfig = {
 	apiKey: "AIzaSyCISOirQ_s1-GilFVH3x5PmMGJ3RuvlHBg",
 	authDomain: "projekt-staff.firebaseapp.com",
@@ -15,7 +18,7 @@ const firebaseConfig = {
 var app: FirebaseApp
 var firebaseAuth: Auth
 var firebaseStorage: FirebaseStorage
-var db : Firestore
+var db: Firestore
 
 if (process.env.NODE_ENV === "production") {
 	app = initializeApp(firebaseConfig)
@@ -27,10 +30,11 @@ if (process.env.NODE_ENV === "production") {
 	firebaseAuth = getAuth()
 	firebaseStorage = getStorage()
 	db = getFirestore()
-	connectAuthEmulator(firebaseAuth, 'http://10.0.0.3:9099')
-	connectStorageEmulator(firebaseStorage, "10.0.0.3", 9199)
-	connectFirestoreEmulator(db, "10.0.0.3", 8080)
+	connectAuthEmulator(firebaseAuth, `http://${localIP}:9099`)
+	connectStorageEmulator(firebaseStorage, `${localIP}`, 9199)
+	connectFirestoreEmulator(db, `${localIP}`, 8080)
 }
 // console.debug('firebaseAuth', firebaseAuth)
+
 
 export { firebaseAuth, firebaseStorage, db }

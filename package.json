@@ -2,7 +2,7 @@
   "name": "vuetify-project",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "node setupIP.js && vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "publish": "node publish.ts"
@@ -16,6 +16,8 @@
     "dayspan-vuetify": "^0.4.0",
     "dotenv": "^16.0.3",
     "firebase": "^9.17.1",
+    "ip": "^1.1.8",
+    "local-ip-address": "^1.0.0",
     "pinia": "^2.0.30",
     "primeicons": "^6.0.1",
     "primevue": "^3.23.0",
@@ -29,7 +31,8 @@
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
+    "@types/ip": "^1.1.0",
+    "@types/node": "^18.14.6",
     "@types/spotify-web-api-node": "^5.0.7",
     "@types/vue-cropperjs": "^4.1.2",
     "@types/webfontloader": "^1.6.35",

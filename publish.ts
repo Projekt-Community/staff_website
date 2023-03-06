@@ -1,26 +1,21 @@
 const path = require('path')
-const { execSync } = require("child_process");
+const cp = require('child_process')
+const { exec, execSync } = cp;
 const yargs = require('yargs')
 
-console.log("process.argv: ", process.argv)
 const argv = yargs(process.argv.slice(2))
 	.options({
-		b: { alias: "branch", type: "string", demandOption: true },
+		b: { alias: "live", type: "boolean"},
 		m: { alias: "message", type: "string", demandOption: true, coerce: parseMessage }
 	})
-	.help().argv
+	.help()
+	.argv
 
 console.log("argv: ", argv)
-const { branch, message } = argv;
+const { l, message } = argv;
 
 const validBranches = ["Live", "main"]
-const isLive = branch == "Live"
-const isMain = branch == "main"
-
-if (!validBranches.includes(branch)) {
-	console.error("Invalid branch provided. Branch must be either 'main' or 'Live'")
-	process.exit(1)
-}
+const isLive = l || false
 
 if (isLive) { // Build the dist folder and copy the 404 code
 	execute("npm run build")
