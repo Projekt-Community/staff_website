@@ -2,7 +2,6 @@ import { FirebaseApp, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getStorage, FirebaseStorage, connectStorageEmulator } from 'firebase/storage'
 import { getFirestore, Firestore, connectFirestoreEmulator } from 'firebase/firestore'
-import dotenv from 'dotenv'
 
 const localIP = import.meta.env.VITE_LocalIP
 console.log(localIP)
