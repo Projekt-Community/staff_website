@@ -27,10 +27,11 @@ if (process.env.NODE_ENV === "production") {
 	firebaseAuth = getAuth()
 	firebaseStorage = getStorage()
 	db = getFirestore()
-	connectAuthEmulator(firebaseAuth, 'http://10.0.0.3:9099')
-	connectStorageEmulator(firebaseStorage, "10.0.0.3", 9199)
-	connectFirestoreEmulator(db, "10.0.0.3", 8080)
+	connectAuthEmulator(firebaseAuth, 'http://10.0.1.212:9099')
+	connectStorageEmulator(firebaseStorage, "10.0.1.212", 9199)
+	connectFirestoreEmulator(db, "10.0.1.212", 8080)
 }
 // console.debug('firebaseAuth', firebaseAuth)
+
 
 export { firebaseAuth, firebaseStorage, db }
