@@ -1,15 +1,14 @@
 <template>
 	<v-app>
-		<NavBar :user="user" />
-		<v-main class="ma-10">
+		<nav-bar :user="user" />
+		<v-main class="ma-8">
 			<router-view />
 		</v-main>
 	</v-app>
 </template>
 
-
 <script setup lang="ts">
-import NavBar from './components/Nav-bar.vue';
+import NavBar from './components/Navbar.vue';
 
 import { onBeforeMount } from 'vue';
 import { useUserStore } from '@/store/index'
@@ -24,13 +23,3 @@ onBeforeMount(() => {
 	fetchUserData()
 })
 </script>
-
-<style>
-.full-page {
-	width: 100vw;
-	height: 100vh;
-}
-</style>
-
-<style scoped>
-</style>

@@ -17,30 +17,12 @@
 <style></style>
 
 <template>
-	<v-card
-		class="mx-auto"
-		width="50em"
-		max-width="80vw"
-		max-height="80vh"
-	>
+	<v-card class="mx-auto" width="50em" max-width="80vw" max-height="80vh">
 		<v-card-title class="text-center d-flex">
 			<v-row>
-				<v-col
-					cols="4"
-					class="d-flex"
-				>
-					<v-btn
-						v-if="step == 1"
-						icon="mdi-close"
-						@click="close"
-						class="mr-auto"
-					></v-btn>
-					<v-btn
-						v-else
-						icon="mdi-arrow-left"
-						@click="back"
-						class="mr-auto"
-					></v-btn>
+				<v-col cols="4" class="d-flex">
+					<v-btn v-if="step == 1" icon="mdi-close" @click="close" class="mr-auto"></v-btn>
+					<v-btn v-else icon="mdi-arrow-left" @click="back" class="mr-auto"></v-btn>
 				</v-col>
 				<v-col cols="4">
 					<h3>{{ title }}</h3>
@@ -48,29 +30,16 @@
 				<v-spacer></v-spacer>
 			</v-row>
 		</v-card-title>
-		<v-window
-			v-model="step"
-			class="window"
-		>
-			<v-window-item
-				:value="1"
-				class="window-item"
-			>
+		<v-window v-model="step" class="window">
+			<v-window-item :value="1" class="window-item">
 				<v-card-text>
 					<h4>{{ type == "banner" ? "Banner Upload" : type == "picture" ? "Picture upload" : '' }}</h4>
 					<p>Need to upload your {{ type }} picture. Do so here!</p>
 					<v-divider class="my-10"></v-divider>
-					<div
-						class="d-flex align-center mx-auto"
-						:style="type == 'picture' ? 'width: 50%' : ''"
-					>
-						<v-img
-							:src="current"
-							:aspect-ratio="type == 'banner' ? 20 / 3 : 1"
-							:width="type == 'picture' ? 50 : '100%'"
-							:style="type == 'picture' ? 'border-radius: 50%' : ''"
-							cover
-						>
+					<div class="d-flex align-center mx-auto" :style="type == 'picture' ? 'width: 50%' : ''">
+						<v-img :src="current" :aspect-ratio="type == 'banner' ? 20 / 3 : 1"
+							:width="type == 'picture' ? 50 : '100%'" :style="type == 'picture' ? 'border-radius: 50%' : ''"
+							cover>
 						</v-img>
 					</div>
 				</v-card-text>
@@ -80,15 +49,8 @@
 					<h4>Profile Picture</h4>
 					<p>This is step 2!</p>
 					<v-divider class="my-10"></v-divider>
-					<div
-						v-if="loading"
-						class="progress"
-						id="progress"
-					>
-						<v-progress-circular
-							indeterminate
-							color="primary"
-						></v-progress-circular>
+					<div v-if="loading" class="progress" id="progress">
+						<v-progress-circular indeterminate color="primary"></v-progress-circular>
 					</div>
 					<div id="croppie"></div>
 				</v-card-text>
@@ -98,31 +60,15 @@
 					<h4>Profile Picture</h4>
 					<p>Need to upload your profile picture. Do so here!</p>
 					<v-divider class="my-10"></v-divider>
-					<div
-						class="d-flex align-center"
-						style="width: 100%"
-					>
-						<div
-							style="width: 40%; height: 40%; overflow: hidden;"
-							:style="type == 'profile' ? '50' : '0'"
-							class="mx-auto"
-						>
-							<v-img
-								:src="finalImgURL"
-								class="d-flex align-center justify-center mx-auto"
-							>
+					<div class="d-flex align-center" style="width: 100%">
+						<div style="width: 40%; height: 40%; overflow: hidden;" :style="type == 'profile' ? '50' : '0'"
+							class="mx-auto">
+							<v-img :src="finalImgURL" class="d-flex align-center justify-center mx-auto">
 								<!--  -->
-								<div
-									v-if="progress != undefined && progress != 100"
-									class="d-flex justify-center align-center"
-								>
-									<v-progress-circular
-										indeterminate
-										:size="111"
-										:width="15"
-										color="primary"
-										class="mx-auto"
-									></v-progress-circular>
+								<div v-if="progress != undefined && progress != 100"
+									class="d-flex justify-center align-center">
+									<v-progress-circular indeterminate :size="111" :width="15" color="primary"
+										class="mx-auto"></v-progress-circular>
 								</div>
 							</v-img>
 						</div>
@@ -132,19 +78,11 @@
 
 		</v-window>
 		<v-card-actions>
-			<input
-				type="file"
-				class="d-none"
-				id="inputElement"
-				:key="fileInputKey"
-			>
+			<input type="file" class="d-none" id="inputElement" :key="fileInputKey">
 			<v-btn @click="handleCard(type)">{{ actions[step - 1] }}</v-btn>
 		</v-card-actions>
-		<v-progress-linear
-			v-if="progress != undefined && progress != 100"
-			color="primary"
-			:model-value="progress"
-		></v-progress-linear>
+		<v-progress-linear v-if="progress != undefined && progress != 100" color="primary"
+			:model-value="progress"></v-progress-linear>
 	</v-card>
 </template>
 

@@ -1,8 +1,5 @@
 <template>
-	<div
-		id="slider"
-		class="d-flex justify-center align-center slider"
-	>
+	<div id="slider" class="d-flex justify-center align-center slider">
 
 	</div>
 </template>

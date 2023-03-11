@@ -1,34 +1,14 @@
 <template>
 	<v-container>
 		<v-row justify="center">
-			<v-col
-				cols="10"
-				lg="2"
-				md="4"
-			>
-				<v-sheet
-					rounded="lg"
-					min-height="24em"
-				>
-					<v-row
-						no-gutters
-						justify="center"
-					>
-						<v-avatar
-							:image="userData?.photoURL"
-							size="150"
-							class="mx-5 mt-5"
-						/>
+			<v-col cols="10" lg="2" md="4">
+				<v-sheet rounded="lg" min-height="24em">
+					<v-row no-gutters justify="center">
+						<v-avatar :image="userData?.photoURL" size="150" class="mx-5 mt-5" />
 					</v-row>
-					<v-row
-						justify="center"
-						no-gutters
-					>
+					<v-row justify="center" no-gutters>
 						<v-card-title>{{ userData?.username }}</v-card-title>
-						<v-divider
-							thickness="3"
-							class="mx-16"
-						/>
+						<v-divider thickness="3" class="mx-16" />
 						<v-card-subtitle>{{ userData?.jobTitle }}</v-card-subtitle>
 					</v-row>
 					<v-row no-gutters>
@@ -45,90 +25,50 @@
 						</v-list>
 					</v-row>
 					<v-divider />
-					<v-row
-						no-gutters
-						class="flex-column"
-						align="center"
-					>
-						<v-btn
-							v-for="(social, i) in userData?.Socials"
-							:key="i"
-							class="my-2"
-							width="70%"
-							:href="social.link"
-							target="_blank"
-						>
+					<v-row no-gutters class="flex-column" align="center">
+						<v-btn v-for="(social, i) in userData?.Socials" :key="i" class="my-2" width="70%"
+							:href="social.link" target="_blank">
 							{{ social.name }}
 						</v-btn>
 					</v-row>
 				</v-sheet>
-				<div
-					style="width:fit-content"
-					class="mx-auto my-5"
-				>
-					<v-btn
-						v-if="user && uid == user.uid"
-						class="mx-auto"
-						@click="router.push(`/users/${user?.uid}/edit`)"
-					>
+				<div style="width:fit-content" class="mx-auto my-5">
+					<v-btn v-if="user && uid == user.uid" class="mx-auto" @click="router.push(`/users/${user?.uid}/edit`)">
 						Edit Profile
 					</v-btn>
 				</div>
 			</v-col>
 
-			<v-col
-				cols="12"
-				lg="10"
-				md="8"
-				sm="12"
-			>
-				<v-sheet
-					min-height="80vh"
-					rounded="lg"
-				>
+			<v-col cols="12" lg="10" md="8" sm="12">
+				<v-sheet min-height="80vh" rounded="lg">
 					<v-row no-gutters>
 						<v-img
 							:src="userData?.profileBackground || 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'"
-							width="100%"
-							:aspect-ratio="40 / 6"
-							cover
-						/>
+							width="100%" :aspect-ratio="40 / 6" cover />
 					</v-row>
 					<v-row no-gutters>
-						<v-col
-							cols="12"
-							lg="4"
-						>
-							<v-card
-								min-height="20em"
-								class="ma-5 pa-5"
-							>
+						<v-col cols="12" lg="4">
+							<v-card min-height="20em" class="ma-5 pa-5">
 								<v-card-title class="">Personal Bio</v-card-title>
-								<v-card-text class="text-break"> {{ userData?.personal || "This user has not filled in their personal bio" }} </v-card-text>
+								<v-card-text class="text-break">
+									{{ userData?.personal || "This user has not filled in their personal bio" }}
+								</v-card-text>
 							</v-card>
 						</v-col>
-						<v-col
-							cols="12"
-							lg="4"
-						>
-							<v-card
-								min-height="20em"
-								class="ma-5 pa-5"
-							>
+						<v-col cols="12" lg="4">
+							<v-card min-height="20em" class="ma-5 pa-5">
 								<v-card-title class=""> Work Bio </v-card-title>
-								<v-card-text class="text-break"> {{ userData?.work || "This user has not filled out their work bio" }} </v-card-text>
+								<v-card-text class="text-break">
+									{{ userData?.work || "This user has not filled out their work bio" }}
+								</v-card-text>
 							</v-card>
 						</v-col>
-						<v-col
-							cols="12"
-							lg="4"
-						>
-							<v-card
-								min-height="20em"
-								class="ma-5 pa-5"
-							>
+						<v-col cols="12" lg="4">
+							<v-card min-height="20em" class="ma-5 pa-5">
 								<v-card-title class=""> My Contributions </v-card-title>
-								<v-card-text class="text-break"> {{ userData?.contributions || "This user has not listed any contributions" }} </v-card-text>
+								<v-card-text class="text-break">
+									{{ userData?.contributions || "This user has not listed any contributions" }}
+								</v-card-text>
 							</v-card>
 						</v-col>
 					</v-row>

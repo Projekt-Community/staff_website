@@ -83,56 +83,22 @@ function clearValidation() {
 
 <template>
 	<div class="right d-flex justify-center align-center">
-		<v-snackbar
-			color="error"
-			v-model="snackbar"
-			location="top"
-			:attach="form ? form : ''"
-		>
+		<v-snackbar color="error" v-model="snackbar" location="top" :attach="form ? form : ''">
 			{{ sbText }}
 		</v-snackbar>
 		<v-card class="form-card">
 			<h1 class="text-center py-5">Log in to Projekt: Staff</h1>
-			<v-form
-				@submit.prevent="formLogin"
-				@update:model-value="clearValidation"
-				id="form"
-			>
-				<v-text-field
-					v-model="email"
-					name="email"
-					type="email"
-					label="Email"
-					placeholder="you@company.com"
-					aria-autocomplete="current-email"
-					:rules="emailRules"
-					required
-				/>
+			<v-form @submit.prevent="formLogin" @update:model-value="clearValidation" id="form">
+				<v-text-field v-model="email" name="email" type="email" label="Email" placeholder="you@company.com"
+					aria-autocomplete="current-email" :rules="emailRules" required />
 				<p class="text-right">Forgot Password</p>
-				<v-text-field
-					v-model="password"
-					name="password"
-					type="password"
-					label="Password"
-					aria-autocomplete="current-password"
-					:rules="passwordRules"
-					required
-				/>
-				<v-btn
-					block
-					class="py-6"
-					type="submit"
-					v-if="logingIn == false"
-				>
+				<v-text-field v-model="password" name="password" type="password" label="Password"
+					aria-autocomplete="current-password" :rules="passwordRules" required />
+				<v-btn block class="py-6" type="submit" v-if="logingIn == false">
 					Login
 				</v-btn>
 			</v-form>
-			<v-progress-circular
-			v-if="logingIn"
-				indeterminate
-				color="primary"
-				class="mx-auto my-5"
-			></v-progress-circular>
+			<v-progress-circular v-if="logingIn" indeterminate color="primary" class="mx-auto my-5"></v-progress-circular>
 		</v-card>
 	</div>
 </template>

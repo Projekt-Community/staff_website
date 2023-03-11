@@ -1,25 +1,10 @@
 <template>
-	<main
-		class="pa-0 ma-0 d-flex flex-column"
-		style="height: 100%"
-	>
-		<v-row
-			class="pa-0 ma-0"
-			style="height: 100%"
-		>
-			<v-col
-				class="pa-0 ma-0"
-				cols="0"
-				lg="6"
-				style="height: 100%"
-			>
+	<main class="pa-0 ma-0 d-flex flex-column" style="height: 100%">
+		<v-row class="pa-0 ma-0" style="height: 100%">
+			<v-col class="pa-0 ma-0" cols="0" lg="6" style="height: 100%">
 				<Slider />
 			</v-col>
-			<v-col
-				class="pa-0 ma-0"
-				cols="12"
-				lg="6"
-			>
+			<v-col class="pa-0 ma-0" cols="12" lg="6">
 				<LoginForm />
 			</v-col>
 		</v-row>
@@ -40,4 +25,5 @@ import LoginForm from '@/components/LoginForm.vue';
 
 .flex {
 	display: flex
-}</style>
+}
+</style>

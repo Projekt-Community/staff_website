@@ -1,72 +1,34 @@
 <template>
-	<v-snackbar
-		v-model="snackbar"
-		:color="snackbarMessage.color"
-		location="top"
-	>
+	<v-snackbar v-model="snackbar" :color="snackbarMessage.color" location="top">
 		{{ snackbarMessage.message }}
 	</v-snackbar>
 	<v-container>
 		<v-row justify="center">
-			<v-col
-				cols="12"
-				lg="10"
-				md="8"
-				sm="12"
-			>
-				<v-sheet
-					min-height="80vh"
-					rounded="lg"
-				>
-					<v-toolbar
-						density="compact"
-						:elevation="8"
-					>
-						<v-tabs
-							v-model="tab"
-							align-tabs="title"
-						>
+			<v-col cols="12" lg="10" md="8" sm="12">
+				<v-sheet min-height="80vh" rounded="lg">
+					<v-toolbar density="compact" :elevation="8">
+						<v-tabs v-model="tab" align-tabs="title">
 							<v-tab value="Images">Images</v-tab>
 							<v-tab value="Basic Info">Basic Info</v-tab>
 							<v-tab value="Security">Security</v-tab>
 						</v-tabs>
-						<v-btn
-							v-if="tab == 'Basic Info'"
-							class="ml-auto"
-							@click="publish"
-						>
+						<v-btn v-if="tab == 'Basic Info'" class="ml-auto" @click="publish">
 							Publish
 						</v-btn>
 					</v-toolbar>
 					<v-window v-model="tab">
-						<v-window-item
-							value="Images"
-							class="pa-5"
-						>
+						<v-window-item value="Images" class="pa-5">
 							<h3 class="mx-10 mt-5">Picture</h3>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="2"
-									class="ml-5 mt-5"
-								>
-									<v-card
-										class="d-flex justify-center align-center "
-										height="150px"
-										width="150px"
-									>
-										<v-img
-											:src="profilePhoto"
-											aspect-ratio="1"
-										></v-img>
+								<v-col cols="12" lg="2" class="ml-5 mt-5">
+									<v-card class="d-flex justify-center align-center " height="150px" width="150px">
+										<v-img :src="profilePhoto" aspect-ratio="1"></v-img>
 									</v-card>
 								</v-col>
-								<v-col
-									cols="12"
-									lg="3"
-									class="ml-5 mt-5"
-								>
-									<p>Your pictures are saved in a 1:1 ratio and are decompressed upon upload. However, we still recommend keeping your file upload to 4MB or less due to browser capabilities</p>
+								<v-col cols="12" lg="3" class="ml-5 mt-5">
+									<p>Your pictures are saved in a 1:1 ratio and are decompressed upon upload. However, we
+										still recommend keeping your file upload to 4MB or less due to browser capabilities
+									</p>
 									<div class="mt-5">
 										<v-btn @click="startDialog('picture')">Change</v-btn>
 										<v-btn>Remove</v-btn>
@@ -75,24 +37,14 @@
 							</v-row>
 							<h3 class="mx-10 mt-5">Banner</h3>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="4"
-									class="ml-5 mt-5"
-								>
+								<v-col cols="12" lg="4" class="ml-5 mt-5">
 									<v-card class="d-flex justify-center align-center ">
 										<v-img
 											:src="userData?.profileBackground || 'https://images.pexels.com/photos/3980364/pexels-photo-3980364.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'"
-											:aspect-ratio="20 / 3"
-											cover
-										></v-img>
+											:aspect-ratio="20 / 3" cover></v-img>
 									</v-card>
 								</v-col>
-								<v-col
-									cols="12"
-									lg="6"
-									class="ml-5 mt-5"
-								>
+								<v-col cols="12" lg="6" class="ml-5 mt-5">
 									<p>Profile Banners are sized in a 20:3 Aspect Ratio</p>
 									<div class="mt-5">
 										<v-btn @click="startDialog('banner')">Change</v-btn>
@@ -101,210 +53,107 @@
 								</v-col>
 							</v-row>
 						</v-window-item>
-						<v-window-item
-							value="Basic Info"
-							class="pa-5"
-						>
+						<v-window-item value="Basic Info" class="pa-5">
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
-									<v-text-field
-										label="Username"
-										v-model="displayName"
-										variant="outlined"
-									/>
+								<v-col cols="12" lg="8">
+									<v-text-field label="Username" v-model="displayName" variant="outlined" />
 								</v-col>
 							</v-row>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<v-row no-gutters>
 
 										<v-col cols="8">
-											<v-text-field
-												label="Contact Email"
-												v-model="email"
-												variant="outlined"
-											/>
+											<v-text-field label="Contact Email" v-model="email" variant="outlined" />
 										</v-col>
 										<v-col>
-											<v-checkbox
-												label="Public?"
-												v-model="publicOptions.email"
-												hide-details
-											/>
+											<v-checkbox label="Public?" v-model="publicOptions.email" hide-details />
 										</v-col>
 									</v-row>
 								</v-col>
 							</v-row>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<v-row no-gutters>
 										<v-col cols="8">
-											<v-text-field
-												label="Phone Number"
-												v-model="phoneNumber"
-												variant="outlined"
-											/>
+											<v-text-field label="Phone Number" v-model="phoneNumber" variant="outlined" />
 										</v-col>
 										<v-col>
-											<v-checkbox
-												label="Public?"
-												v-model="publicOptions.phone"
-												hide-details
-											/>
+											<v-checkbox label="Public?" v-model="publicOptions.phone" hide-details />
 										</v-col>
 									</v-row>
 								</v-col>
 							</v-row>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<v-row no-gutters>
 										<v-col cols="8">
-											<v-text-field
-												label="Discord"
-												hint="johndoe#1234"
-												v-model="discord"
-												variant="outlined"
-											/>
+											<v-text-field label="Discord" hint="johndoe#1234" v-model="discord"
+												variant="outlined" />
 										</v-col>
 										<v-col>
-											<v-checkbox
-												label="Public?"
-												v-model="publicOptions.discord"
-												hide-details
-											/>
+											<v-checkbox label="Public?" v-model="publicOptions.discord" hide-details />
 										</v-col>
 									</v-row>
 								</v-col>
 							</v-row>
 
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<v-row no-gutters>
-										<v-textarea
-											v-model="bio"
-											label="Personal Bio"
-											hint="Tell us about yourself!"
-											variant="outlined"
-											no-resize
-										/>
+										<v-textarea v-model="bio" label="Personal Bio" hint="Tell us about yourself!"
+											variant="outlined" no-resize />
 									</v-row>
 								</v-col>
 							</v-row>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<v-row no-gutters>
-										<v-textarea
-											v-model="work"
-											label="Work Bio"
+										<v-textarea v-model="work" label="Work Bio"
 											hint="Tell us about how you got involved with Projekt Community, and about the work you have already done!"
-											variant="outlined"
-											no-resize
-										/>
+											variant="outlined" no-resize />
 									</v-row>
 								</v-col>
 							</v-row>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<v-row no-gutters>
-										<v-textarea
-											v-model="contributions"
-											label="Your Contributions"
+										<v-textarea v-model="contributions" label="Your Contributions"
 											hint="What are you proud to have contributed towards Projekt Community?"
-											variant="outlined"
-											no-resize
-										/>
+											variant="outlined" no-resize />
 									</v-row>
 								</v-col>
 							</v-row>
 							<v-row no-gutters>
-								<v-col
-									cols="12"
-									lg="8"
-								>
+								<v-col cols="12" lg="8">
 									<h3>
 										Socials
-										<v-btn
-											@click="addLink"
-											variant="plain"
-										>
+										<v-btn @click="addLink" variant="plain">
 											<v-icon>mdi-plus</v-icon>
 											Add Link
 										</v-btn>
 									</h3>
-									<div
-										style="width: 100%"
-										class="mb-16"
-									>
-										<draggable
-											v-model="socials"
-											item-key="key"
-										>
+									<div style="width: 100%" class="mb-16">
+										<draggable v-model="socials" item-key="key">
 											<template v-slot:item="{ element }">
 												<div class="my-4">
 													<v-hover>
 														<template #default="{ isHovering, props }">
-															<v-row
-																no-gutters
-																v-bind="props"
-																align="center"
-															>
-																<v-col
-																	cols="1"
-																	class="d-flex justify-center align-center"
-																>
+															<v-row no-gutters v-bind="props" align="center">
+																<v-col cols="1" class="d-flex justify-center align-center">
 																	<v-icon>mdi-menu</v-icon>
 																</v-col>
-																<v-col
-																	cols="5"
-																	lg="3"
-																	class="mx-1 my-0"
-																>
-																	<v-text-field
-																		label="Link Title"
-																		hide-details
-																		v-model="element.name"
-																	></v-text-field>
+																<v-col cols="5" lg="3" class="mx-1 my-0">
+																	<v-text-field label="Link Title" hide-details
+																		v-model="element.name"></v-text-field>
 																</v-col>
-																<v-col
-																	cols="5"
-																	lg="3"
-																	class="mx-1 my-0"
-																>
-																	<v-text-field
-																		label="URL"
-																		v-model="element.link"
-																		hide-details
-																	></v-text-field>
+																<v-col cols="5" lg="3" class="mx-1 my-0">
+																	<v-text-field label="URL" v-model="element.link"
+																		hide-details></v-text-field>
 																</v-col>
 
-																<v-btn
-																	v-if="isHovering"
-																	icon="mdi-delete"
-																	variant="plain"
-																	class="my-auto"
-																	@click="deleteLink(element)"
-																/>
+																<v-btn v-if="isHovering" icon="mdi-delete" variant="plain"
+																	class="my-auto" @click="deleteLink(element)" />
 															</v-row>
 														</template>
 													</v-hover>
@@ -315,92 +164,37 @@
 								</v-col>
 							</v-row>
 						</v-window-item>
-						<v-window-item
-							value="Security"
-							class="pa-5"
-						>
+						<v-window-item value="Security" class="pa-5">
 							<h3>Change Login Email</h3>
-							<v-row
-								no-gutters
-								class="my-5"
-							>
-								<v-col
-									cols="12"
-									lg="4"
-									class="px-5"
-								>
-									<v-text-field
-										label="Email"
-										type="text"
-										variant="outlined"
-										:placeholder="placeholderEmail"
-										:rules="emailRules"
-										persistent-placeholder
-										:name="Math.random().toString()"
-										autocomplete="none"
-										v-model="loginEmail"
-									></v-text-field>
+							<v-row no-gutters class="my-5">
+								<v-col cols="12" lg="4" class="px-5">
+									<v-text-field label="Email" type="text" variant="outlined"
+										:placeholder="placeholderEmail" :rules="emailRules" persistent-placeholder
+										:name="Math.random().toString()" autocomplete="none"
+										v-model="loginEmail"></v-text-field>
 								</v-col>
 								<v-col class="d-flex align-center">
 									<v-btn @click="ChangeEmail">Update</v-btn>
 								</v-col>
 							</v-row>
 							<h3>Change Password</h3>
-							<v-row
-								no-gutters
-								class="my-5"
-							>
-								<v-col
-									cols="12"
-									lg="3"
-									class="px-5"
-									aria-required
-								>
-									<v-text-field
-										label="Current Password"
-										type="text"
-										class="pass"
-										variant="outlined"
-										:name="Math.random().toString()"
-										autocomplete="off"
-										v-model="CurrentPassword"
-									></v-text-field>
+							<v-row no-gutters class="my-5">
+								<v-col cols="12" lg="3" class="px-5" aria-required>
+									<v-text-field label="Current Password" type="text" class="pass" variant="outlined"
+										:name="Math.random().toString()" autocomplete="off"
+										v-model="CurrentPassword"></v-text-field>
 								</v-col>
-								<v-col
-									cols="12"
-									lg="3"
-									class="px-5"
-								>
-									<v-text-field
-										label="New Password"
-										variant="outlined"
-										type="text"
-										class="pass"
-										:name="Math.random().toString()"
-										autocomplete="off"
-										v-model="NewPassword"
-									></v-text-field>
+								<v-col cols="12" lg="3" class="px-5">
+									<v-text-field label="New Password" variant="outlined" type="text" class="pass"
+										:name="Math.random().toString()" autocomplete="off"
+										v-model="NewPassword"></v-text-field>
 								</v-col>
-								<v-col
-									cols="12"
-									lg="3"
-									class="px-5"
-								>
-									<v-text-field
-										label="Confirm Password"
-										variant="outlined"
-										type="text"
-										class="pass"
-										:name="Math.random().toString()"
-										autocomplete="off"
-										v-model="ConfirmPassword"
-									></v-text-field>
+								<v-col cols="12" lg="3" class="px-5">
+									<v-text-field label="Confirm Password" variant="outlined" type="text" class="pass"
+										:name="Math.random().toString()" autocomplete="off"
+										v-model="ConfirmPassword"></v-text-field>
 								</v-col>
-								<v-col
-									cols="12"
-									lg="3"
-									class="px-5 d-flex align-center"
-								>
+								<v-col cols="12" lg="3" class="px-5 d-flex align-center">
 									<v-btn @click="ChangePassword">Change Password</v-btn>
 								</v-col>
 							</v-row>
@@ -411,15 +205,8 @@
 		</v-row>
 	</v-container>
 
-	<v-dialog
-		v-model="dialog"
-		persistent
-	>
-		<ProfilePhoto
-			@close="dialog = false"
-			:type="edit.type"
-			:current="edit.current"
-		/>
+	<v-dialog v-model="dialog" persistent>
+		<ProfilePhoto @close="dialog = false" :type="edit.type" :current="edit.current" />
 	</v-dialog>
 </template>
 

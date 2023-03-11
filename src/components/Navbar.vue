@@ -5,7 +5,7 @@ import { defineProps } from 'vue';
 import { User } from 'firebase/auth'
 import { useTheme } from 'vuetify/lib/framework.mjs';
 import router from '@/router'
-import AccountMenu from './props/Account-menu.vue'
+import AccountMenu from './props/AccountMenu.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store'
 
@@ -16,7 +16,7 @@ defineProps<{
 	user: User | null,
 }>()
 
-const drawer = ref(false)
+const drawer = ref(true)
 
 //#region Theme
 const theme = useTheme()
@@ -45,47 +45,20 @@ const navLocs = [
 		<v-app-bar-nav-icon @click="drawer = !drawer" />
 		<v-toolbar-title>Projekt: Staff</v-toolbar-title>
 		<v-spacer />
-		<v-menu
-			v-if="user"
-			min-width="200px"
-			rounded
-		>
+		<v-menu v-if="user" min-width="200px" rounded>
 			<template v-slot:activator="{ props }">
-				<v-btn
-					v-if="user"
-					icon
-					v-bind="props"
-				>
-					<v-avatar
-						icon="mdi-account"
-						:image="profilePhoto"
-					/>
+				<v-btn v-if="user" icon v-bind="props">
+					<v-avatar icon="mdi-account" :image="profilePhoto" />
 				</v-btn>
 			</template>
-			<AccountMenu
-				:user="user"
-				:profilePhoto="profilePhoto"
-			/>
+			<AccountMenu :user="user" :profilePhoto="profilePhoto" />
 		</v-menu>
 	</v-app-bar>
 
-	<v-navigation-drawer
-		app
-		v-model="drawer"
-		width="200"
-	>
+	<v-navigation-drawer app v-model="drawer" width="200">
 		<v-list>
-			<v-list-item
-				v-for="(nav, i) in navLocs"
-				:key="i"
-				class="px-0"
-			>
-				<v-btn
-					@click="router.push(nav.path)"
-					height="50"
-					width="200"
-					rounded="e-xl"
-				>
+			<v-list-item v-for="(nav, i) in navLocs" :key="i" class="px-0">
+				<v-btn @click="router.push(nav.path)" height="50" width="200" rounded="e-xl">
 					{{ nav.name }}
 				</v-btn>
 			</v-list-item>

@@ -6,6 +6,4 @@
 	<h1>Calendar</h1>
 </template>
 
-<style>
-
-</style>
+<style></style>
