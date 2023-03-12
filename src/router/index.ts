@@ -42,6 +42,22 @@ const routes = [
 		}
 	},
 	{
+		path: '/edit-event',
+		name: 'Edit Event',
+		component: () => import('@/views/EditEvent.vue'),
+		meta: {
+			public: false,
+		}
+	},
+	{
+		path: '/events',
+		name: 'Events',
+		component: () => import('@/views/Events.vue'),
+		meta: {
+			public: false,
+		}
+	},
+	{
 		path: '/Calendar',
 		name: 'Calendar',
 		component: () => import('@/views/Calendar.vue'),

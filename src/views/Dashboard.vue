@@ -1,6 +1,12 @@
 <template>
-	<v-card>
-		<h1>hello</h1>
+	<h1>Dashboard</h1>
+	<h3>Text for testing scrolling:</h3>
+	<v-card class="pa-4 my-4" v-for="i in 20">
+		Random Text:
+		Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis perspiciatis in officiis, eum vero soluta
+		doloribus voluptates qui! Tempore aliquid ducimus provident animi esse quisquam dolor labore nisi in incidunt amet consectetur, adipisicing elit. Perferendis perspiciatis in officiis, eum vero soluta
+		doloribus voluptates qui! Tempore aliquid ducimus provident animi amet consectetur, adipisicing elit. Perferendis perspiciatis in officiis, eum vero soluta
+		doloribus voluptates qui! Tempore aliquid ducimus provident animi ?
 	</v-card>
 </template>
 

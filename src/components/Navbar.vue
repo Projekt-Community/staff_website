@@ -18,7 +18,7 @@ defineProps<{
 
 const drawer = ref(true)
 
-//#region Theme
+
 const theme = useTheme()
 theme.global.name.value = "dark"
 const toggleTheme = () => {
@@ -26,25 +26,36 @@ const toggleTheme = () => {
 	theme.global.name.value = theme.global.current.value.dark ? 'light' : "dark"
 }
 
-const navLocs = [
+const navLinks = [
 	{
 		name: "Dashboard",
+		icon: "mdi-apps",
 		path: "/"
 	},
 	{
 		name: "Calendar",
+		icon: "mdi-calendar",
 		path: "/calendar"
-	}
+	},
+	{
+		name: "Events",
+		icon: "mdi-calendar-star",
+		path: "/events"
+	},
 ]
-//#endregion
 
 </script>
 
 <template>
-	<v-app-bar app>
+	<v-app-bar>
 		<v-app-bar-nav-icon @click="drawer = !drawer" />
-		<v-toolbar-title>Projekt: Staff</v-toolbar-title>
-		<v-spacer />
+		<v-avatar rounded="0" class="ma-2">
+			<v-img src="@/assets/logo.svg" contain></v-img>
+		</v-avatar>
+		<v-toolbar-title>
+			Projekt: Staff
+		</v-toolbar-title>
+
 		<v-menu v-if="user" min-width="200px" rounded>
 			<template v-slot:activator="{ props }">
 				<v-btn v-if="user" icon v-bind="props">
@@ -55,13 +66,10 @@ const navLocs = [
 		</v-menu>
 	</v-app-bar>
 
-	<v-navigation-drawer app v-model="drawer" width="200">
-		<v-list>
-			<v-list-item v-for="(nav, i) in navLocs" :key="i" class="px-0">
-				<v-btn @click="router.push(nav.path)" height="50" width="200" rounded="e-xl">
-					{{ nav.name }}
-				</v-btn>
-			</v-list-item>
+	<v-navigation-drawer v-model="drawer">
+		<v-list nav density="compact" class="mt-4">
+			<v-list-item v-for="(link, i) in navLinks" :key="i" :prepend-icon="link.icon" :title="link.name"
+				:to="link.path" />
 		</v-list>
 	</v-navigation-drawer>
 </template>

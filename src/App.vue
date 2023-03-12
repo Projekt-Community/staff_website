@@ -4,11 +4,13 @@
 		<v-main class="ma-8">
 			<router-view />
 		</v-main>
+		<main-footer />
 	</v-app>
 </template>
 
 <script setup lang="ts">
 import NavBar from './components/Navbar.vue';
+import MainFooter from './components/MainFooter.vue'
 
 import { onBeforeMount } from 'vue';
 import { useUserStore } from '@/store/index'
